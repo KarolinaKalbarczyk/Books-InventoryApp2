@@ -70,6 +70,9 @@ public class EditorActivity extends AppCompatActivity implements
 
     private Button mCallButton;
 
+    private int minNumber = 0;
+
+
     /** Boolean flag that keeps track of whether the book has been edited (true) or not (false) */
     private boolean mBookHasChanged = false;
 
@@ -197,27 +200,46 @@ public class EditorActivity extends AppCompatActivity implements
         // Create a ContentValues object where column names are the keys,
         // and book attributes from the editor are the values.
         ContentValues values = new ContentValues();
-        values.put(BookContract.BookEntry.COLUMN_PRODUCT_NAME, nameString);
-        values.put(BookContract.BookEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
 
-        int price = 0;
-        if (!TextUtils.isEmpty(priceString)){
-            price = Integer.parseInt(priceString);
+        if (TextUtils.isEmpty(nameString)) {
+            Toast.makeText(this, getString(R.string.name_error),
+                    Toast.LENGTH_SHORT).show(); // mNameEditText.setError(R.id.name_error) can be
+            minNumber = 1;
+            return;
         }
-        values.put(BookEntry.COLUMN_PRICE, price);
+        values.put(BookEntry.COLUMN_PRODUCT_NAME, nameString);
 
-        int quantity = 0;
-        if (!TextUtils.isEmpty(quantityString)){
-            quantity = Integer.parseInt(quantityString);
+        if (TextUtils.isEmpty(priceString)) {
+            Toast.makeText(this, getString(R.string.price_error),
+                    Toast.LENGTH_SHORT).show();
+            minNumber = 1;
+            return;
         }
-        values.put(BookEntry.COLUMN_QUANTITY, quantity);
+        values.put(BookEntry.COLUMN_PRICE, priceString);
 
-        int phone = 0;
-        if (!TextUtils.isEmpty(supplierPhoneString)){
-            phone = Integer.parseInt(supplierPhoneString);
+        if (TextUtils.isEmpty(quantityString)) {
+            Toast.makeText(this, getString(R.string.quantity_error),
+                    Toast.LENGTH_SHORT).show();
+            minNumber = 1;
+            return;
         }
-        values.put(BookEntry.COLUMN_SUPPLIER_PHONE, phone);
+        values.put(BookEntry.COLUMN_QUANTITY, quantityString);
 
+        if (TextUtils.isEmpty(supplierNameString)) {
+            Toast.makeText(this, getString(R.string.supplier_error),
+                    Toast.LENGTH_SHORT).show();
+            minNumber = 1;
+            return;
+        }
+        values.put(BookEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
+
+        if (TextUtils.isEmpty(supplierPhoneString)) {
+            Toast.makeText(this, getString(R.string.phone_error),
+                    Toast.LENGTH_SHORT).show();
+            minNumber = 1;
+            return;
+        }
+        values.put(BookEntry.COLUMN_SUPPLIER_PHONE, supplierPhoneString);
 
       // Determine if this is a new or existing book by checking if mCurrentBookUri is null or not
         if (mCurrentBookUri == null) {

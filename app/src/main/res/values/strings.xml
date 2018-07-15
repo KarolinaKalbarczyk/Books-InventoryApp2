@@ -94,4 +94,15 @@
     <!-- Label for the book's price if the price is unknown [CHAR LIMIT=20] -->
     <string name="unknown_price">Unknown breed</string>
     <string name="dollar">$</string>
+
+    <string name="name_error">You must put the name of product!</string>
+
+    <string name="price_error">You must put the price of product!</string>
+
+    <string name="quantity_error">You must put the quantity of product!</string>
+
+    <string name="supplier_error">You must put the name of supllier!</string>
+
+    <string name="phone_error">You must put the phone of supplier!</string>
+
 </resources>
