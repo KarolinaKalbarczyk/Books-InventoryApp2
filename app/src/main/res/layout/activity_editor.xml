@@ -163,7 +163,7 @@
                 android:id="@+id/edit_supplier_phone"
                 style="@style/EditorFieldStyle"
                 android:hint="hint supplier phone"
-                android:inputType="number" />
+                android:inputType="phone" />
         </LinearLayout>
     </LinearLayout>
 

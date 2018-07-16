@@ -70,8 +70,6 @@ public class EditorActivity extends AppCompatActivity implements
 
     private Button mCallButton;
 
-    private int minNumber = 0;
-
 
     /** Boolean flag that keeps track of whether the book has been edited (true) or not (false) */
     private boolean mBookHasChanged = false;
@@ -204,7 +202,6 @@ public class EditorActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(nameString)) {
             Toast.makeText(this, getString(R.string.name_error),
                     Toast.LENGTH_SHORT).show(); // mNameEditText.setError(R.id.name_error) can be
-            minNumber = 1;
             return;
         }
         values.put(BookEntry.COLUMN_PRODUCT_NAME, nameString);
@@ -212,23 +209,34 @@ public class EditorActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(priceString)) {
             Toast.makeText(this, getString(R.string.price_error),
                     Toast.LENGTH_SHORT).show();
-            minNumber = 1;
             return;
         }
-        values.put(BookEntry.COLUMN_PRICE, priceString);
+        try {
+            int price = Integer.parseInt(priceString);
+            values.put(BookEntry.COLUMN_PRICE, priceString);
+        }
+        catch (NumberFormatException e){
+            Toast.makeText(this, "You must input a valid price", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (TextUtils.isEmpty(quantityString)) {
             Toast.makeText(this, getString(R.string.quantity_error),
                     Toast.LENGTH_SHORT).show();
-            minNumber = 1;
             return;
         }
-        values.put(BookEntry.COLUMN_QUANTITY, quantityString);
+        try {
+            int quantity = Integer.parseInt(quantityString);
+            values.put(BookEntry.COLUMN_QUANTITY, quantityString);
+        }
+        catch (NumberFormatException e){
+            Toast.makeText(this, "You must input a valid quantity", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (TextUtils.isEmpty(supplierNameString)) {
             Toast.makeText(this, getString(R.string.supplier_error),
                     Toast.LENGTH_SHORT).show();
-            minNumber = 1;
             return;
         }
         values.put(BookEntry.COLUMN_SUPPLIER_NAME, supplierNameString);
@@ -236,7 +244,6 @@ public class EditorActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(supplierPhoneString)) {
             Toast.makeText(this, getString(R.string.phone_error),
                     Toast.LENGTH_SHORT).show();
-            minNumber = 1;
             return;
         }
         values.put(BookEntry.COLUMN_SUPPLIER_PHONE, supplierPhoneString);
